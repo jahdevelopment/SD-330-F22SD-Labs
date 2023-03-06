@@ -21,12 +21,6 @@ namespace SD_330_F22SD_Labs.Controllers
 
         //GET: Addresses
 
-        //public IActionResult Index()
-        //{
-        //    List<Address> addresses = _context.Address.ToList();
-
-        //    return View(addresses);
-        //}
 
         public IActionResult index()
         {
@@ -35,15 +29,6 @@ namespace SD_330_F22SD_Labs.Controllers
             ).ToList();
             return View(addresses);
         }
-
-
-
-        //public async Task<IActionResult> Index()
-        //{
-        //    var lab1Context = _context.Address.Include(a => a.Customer);
-        //    return View(await lab1Context.ToListAsync());
-        //}
-
 
 
         // GET: Addresses/Details/5

@@ -30,37 +30,6 @@ namespace SD_330_F22SD_Labs.Controllers
             return View(customers);
         }
 
-        //public IActionResult CustomersList()
-        //{
-        //    var CustomersTable = _context.Customer.AsEnumerable()
-        //    .Select(Column => new {
-        //        CustomerID = Column.CustomerId<int>("ID"),
-        //        FirstName = row.Field<string>("FirstName")
-        //    });
-
-        //    foreach (var row in CustomersTable)
-        //    {
-        //        Console.WriteLine($"{row.Name} - {row.Gender}");
-        //    }
-            
-        //    Age = row.Field<int>("Age")
-
-
-
-
-
-
-
-        //    return View("Index", customers);
-        //}
-
-        //public IActionResult CustomersList()
-        //{
-        //    List<Customer> customers = _context.Customer.Where(c =>
-        //        c.addresses.Count > 0 && c.addresses.All(a => a.AddressLine1.Length > 3)
-        //        ).ToList<Customer>();
-        //    return View("Index", customers);
-        //}
 
         // GET: Customers/Details/5
         public async Task<IActionResult> Details(int? id)
