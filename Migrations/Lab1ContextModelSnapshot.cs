@@ -34,7 +34,6 @@ namespace SD_330_F22SD_Labs.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AddressLine2")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("City")
@@ -45,9 +44,6 @@ namespace SD_330_F22SD_Labs.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
                     b.Property<string>("PostalCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -57,8 +53,6 @@ namespace SD_330_F22SD_Labs.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AddressId");
-
-                    b.HasIndex("CustomerId");
 
                     b.ToTable("Address");
                 });
@@ -72,11 +66,9 @@ namespace SD_330_F22SD_Labs.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerId"));
 
                     b.Property<string>("CompanyName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EmailAddress")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
@@ -92,7 +84,6 @@ namespace SD_330_F22SD_Labs.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CustomerId");
@@ -100,20 +91,59 @@ namespace SD_330_F22SD_Labs.Migrations
                     b.ToTable("Customer");
                 });
 
-            modelBuilder.Entity("SD_330_F22SD_Labs.Models.Address", b =>
+            modelBuilder.Entity("SD_330_F22SD_Labs.Models.CustomerAddress", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AddressId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsOwner")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("customerAddresses");
+                });
+
+            modelBuilder.Entity("SD_330_F22SD_Labs.Models.CustomerAddress", b =>
+                {
+                    b.HasOne("SD_330_F22SD_Labs.Models.Address", "Address")
+                        .WithMany("CustomerAddresses")
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("SD_330_F22SD_Labs.Models.Customer", "Customer")
-                        .WithMany("addresses")
+                        .WithMany("CustomerAddresses")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Address");
+
                     b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("SD_330_F22SD_Labs.Models.Address", b =>
+                {
+                    b.Navigation("CustomerAddresses");
                 });
 
             modelBuilder.Entity("SD_330_F22SD_Labs.Models.Customer", b =>
                 {
-                    b.Navigation("addresses");
+                    b.Navigation("CustomerAddresses");
                 });
 #pragma warning restore 612, 618
         }

@@ -24,9 +24,8 @@ namespace SD_330_F22SD_Labs.Controllers
 
         public IActionResult index()
         {
-            List<Address> addresses = _context.Address.Include(a =>
-            a.Customer
-            ).ToList();
+            List<Address> addresses = _context.Address.ToList();
+
             return View(addresses);
         }
 
@@ -40,7 +39,6 @@ namespace SD_330_F22SD_Labs.Controllers
             }
 
             var address = await _context.Address
-                .Include(a => a.Customer)
                 .FirstOrDefaultAsync(m => m.AddressId == id);
             if (address == null)
             {
@@ -62,7 +60,7 @@ namespace SD_330_F22SD_Labs.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AddressId,AddressLine1,AddressLine2,City,StateProvince,CountryRegion,PostalCode,CustomerId")] Address address)
+        public async Task<IActionResult> Create([Bind("AddressId,AddressLine1,AddressLine2,City,StateProvince,CountryRegion,PostalCode")] Address address)
         {
             if (ModelState.IsValid)
             {
@@ -70,7 +68,7 @@ namespace SD_330_F22SD_Labs.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CustomerId"] = new SelectList(_context.Customer, "CustomerId", "CustomerId", address.CustomerId);
+            ViewData["CustomerId"] = new SelectList(_context.Customer, "CustomerId", "CustomerId");
             return View(address);
         }
 
@@ -87,7 +85,7 @@ namespace SD_330_F22SD_Labs.Controllers
             {
                 return NotFound();
             }
-            ViewData["CustomerId"] = new SelectList(_context.Customer, "CustomerId", "CustomerId", address.CustomerId);
+            ViewData["CustomerId"] = new SelectList(_context.Customer, "CustomerId", "CustomerId");
             return View(address);
         }
 
@@ -96,7 +94,7 @@ namespace SD_330_F22SD_Labs.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AddressId,AddressLine1,AddressLine2,City,StateProvince,CountryRegion,PostalCode,CustomerId")] Address address)
+        public async Task<IActionResult> Edit(int id, [Bind("AddressId,AddressLine1,AddressLine2,City,StateProvince,CountryRegion,PostalCode")] Address address)
         {
             if (id != address.AddressId)
             {
@@ -123,7 +121,7 @@ namespace SD_330_F22SD_Labs.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CustomerId"] = new SelectList(_context.Customer, "CustomerId", "CustomerId", address.CustomerId);
+            ViewData["CustomerId"] = new SelectList(_context.Customer, "CustomerId", "CustomerId");
             return View(address);
         }
 
@@ -136,7 +134,6 @@ namespace SD_330_F22SD_Labs.Controllers
             }
 
             var address = await _context.Address
-                .Include(a => a.Customer)
                 .FirstOrDefaultAsync(m => m.AddressId == id);
             if (address == null)
             {
