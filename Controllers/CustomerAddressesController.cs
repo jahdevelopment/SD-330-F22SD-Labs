@@ -26,6 +26,7 @@ namespace SD_330_F22SD_Labs.Controllers
             return View(await lab1Context.ToListAsync());
         }
 
+
         // GET: CustomerAddres/Compare
 
         public async Task<IActionResult> Compare()
@@ -33,6 +34,7 @@ namespace SD_330_F22SD_Labs.Controllers
             var lab1Context = _context.customerAddresses.Include(c => c.Address).Include(c => c.Customer);
             return View(await lab1Context.ToListAsync());
         }
+
 
         // GET: CustomerAddresses/Details/5
         public async Task<IActionResult> Details(int? id)
